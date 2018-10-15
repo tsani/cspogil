@@ -5,6 +5,8 @@
 *.pax
 *.synctex.gz
 *.toc
+*_Student.pdf
+*_Teacher.pdf
 
 # Java / Python
 *.class
