@@ -1,10 +1,6 @@
 % Based on Models 1 and 2 in "Searching" by Clif Kussmaul
 
-\model{Hi-Lo Game}
-
-\begin{minipage}{0.58\textwidth}
 Hi-Lo is a number guessing game with simple rules, played by school children.
-\vspace{1ex}
 \begin{enumerate}[nosep]
 \item There are two players -- $A$ and $B$.
 \item Player $A$ thinks of a number from 1 to 100.
@@ -12,25 +8,16 @@ Hi-Lo is a number guessing game with simple rules, played by school children.
 \item Player $A$ responds with \\ ``too high'', ``too low'', or ``you win''.
 \item Players $B$ and $A$ continue to guess and \\ respond until $B$ wins (or gives up).
 \end{enumerate}
-\end{minipage}
-\hfill
-\begin{minipage}{0.40\textwidth}
-\centering
-\includegraphics[width=0.9\linewidth]{hi-lo1.png}
-\end{minipage}
-
 
 \quest{20 min}
-
 
 \Q How many different answers can player $A$ give? \ans{Three (too high, too low, you win).}
 
 \vspace{1ex}
 
-
 \Q When does the game end?
 
-\begin{answer}[2em]
+\begin{answer}[1em]
 The game ends when $B$ guesses the correct number or gives up.
 \end{answer}
 
@@ -63,50 +50,3 @@ In this particular example:
 
 1: e ~ 2: d ~ 3: c ~ 4: b ~ 5: a
 \end{answer}
-
-
-\Q Rank order the algorithms with regard to how \textbf{easy} they are to describe or specify.
-(Suppose you had to explain them to a first-grader so that he/she could play the game.)
-Write 1 for the algorithm that is easiest to describe and 5 for the one that is hardest.
-
-\begin{answer}
-In this particular example:
-
-1: a ~ 2: b ~ 3: c ~ 4: d ~ 5: e
-\end{answer}
-
-
-\Q For each algorithm ($a$ to $e$), plot its fast and easy values on the graph:
-
-\newcommand{\X}{\ans{X}}
-
-\begin{table}[h]
-\centering
-\renewcommand{\arraystretch}{1.6}
-\begin{tabularx}{275pt}{X C{28pt} | C{28pt} C{28pt} C{28pt} C{28pt} C{28pt}}
-Hard & 5 & \X                    \\
-     & 4 &    & \X               \\
-     & 3 &    &   & \X           \\
-     & 2 &    &   &   & \X       \\
-Easy & 1 &    &   &   &   & \X   \\
-\hline
-     & & 1    & 2 & 3 & 4 & 5    \\
-     & & Fast &   &   &   & Slow \\
-\end{tabularx}
-\end{table}
-
-
-\Q In complete sentences, describe the relationship between the fast and easy rankings, including what you see from the graph.
-
-\begin{answer}
-Algorithms that are really easy to describe (and are not that sophisticated) generally run the slowest.
-On the other hand, fast algorithms are complex and more difficult to describe.
-\end{answer}
-
-
-\vfill
-\comment{
-In computing, we often must search for a particular item in a set.
-Computer scientists are particularly interested in searching very large sets, with thousands or millions of values.
-For example, the Harvard University Library has roughly 16,000,000 volumes, and the US Library of Congress has roughly 22 million cataloged books and over 100,000,000 total items.
-}
