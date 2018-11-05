@@ -16,13 +16,13 @@ CLEAN = True
 # default course paths to build
 PATHS = ["CS0", "CS1"]
 
-def latex(name, suff):
+def latex(name, suff, force=False):
     """Run latex and rename pdf file."""
     print("  " + suff + "...", end=' ')
     sys.stdout.flush()
     # check timestamp
     pdf = name[:-4] + "_" + suff + ".pdf"
-    if os.path.isfile(pdf):
+    if not force and os.path.isfile(pdf):
         if os.path.getmtime(pdf) > os.path.getmtime(name):
             print("SKIP")
             return
@@ -44,7 +44,7 @@ def latex(name, suff):
         os.remove("_TEMP_1.run")
         os.remove("_TEMP_2.run")
 
-def build(path, name):
+def build(path, name, force=False):
     """Build the given source file."""
     if name == "_TEMP_.tex":
         return  # ignore previous build
@@ -67,18 +67,18 @@ def build(path, name):
         temp.write("\\end{document}\n")
         temp.close()
     # build teacher version
-    status = latex(name, "Teacher")
+    status = latex(name, "Teacher", force=force)
     if status:
         return status
     # build student version
-    status = latex(name, "Student")
+    status = latex(name, "Student", force=force)
     if status:
         return status
     # delete temp activity
     if CLEAN:
         os.remove("_TEMP_.tex")
 
-def main(courses, pattern):
+def main(courses, pattern, force=False):
     """Find and build all files."""
     cwd = os.getcwd()
     for root in courses:
@@ -88,7 +88,7 @@ def main(courses, pattern):
                 if pattern != "clean" and name.endswith(".tex"):
                     if pattern == "all" or pattern in name:
                         os.chdir(path)
-                        status = build(path, name)
+                        status = build(path, name, force=force)
                         if status:
                             return status
                         os.chdir(cwd)
@@ -100,11 +100,27 @@ def main(courses, pattern):
                         os.remove(pathname)
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        main(PATHS, sys.argv[1])
-    elif len(sys.argv) == 3:
-        main([sys.argv[1]], sys.argv[2])
-    else:
-        print("Usage: build.py [COURSE] {all | clean | NAME}")
-        print("COURSE is CS0, CS1, or blank for all")
-        print("NAME is any substring of the file(s)")
+    targets = PATHS
+    got_targets = False
+    action = "all"
+    got_action = False
+    force = False
+    i = 1
+    while i < len(sys.argv):
+        if sys.argv[i] == "--force":
+            force = True
+        elif not got_targets:
+            targets= [sys.argv[i]]
+            got_targets = True
+        elif not got_action:
+            action = sys.argv[i]
+            got_action = True
+        else:
+            print("Unexpected command line arguments.")
+            print("Usage: build.py [COURSE] {all | clean | NAME}")
+            print("COURSE is CS0, CS1, or blank for all")
+            print("NAME is any substring of the file(s)")
+            sys.exit(1)
+        i += 1
+
+    main(targets, action, force=force)
